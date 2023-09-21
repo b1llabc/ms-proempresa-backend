@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proempresa.msproempresaprueba.service.ClientesService;
 import com.proempresa.msproempresaprueba.service.dto.ClienteDTO;
 
-//import io.swagger.annotations.ApiOperation;
-//import io.swagger.annotations.ApiResponse;
-//import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 
 @RestController
@@ -31,11 +31,15 @@ public class ClientesController {
     private ClientesService clientesService;
     
     @GetMapping("/all")
+    @ApiOperation(value = "Obtener todos los clientes")
+    @ApiResponse(code = 200, message = "OK")
 	public ResponseEntity<List<ClienteDTO>> getAll() {
     	return new ResponseEntity<>(clientesService.getAll(), HttpStatus.OK);
 	}
 
     @PostMapping("/save")
+    @ApiOperation(value = "Guardar cliente")
+    @ApiResponse(code = 201, message = "Cliente guardado")
 	public ResponseEntity<ClienteDTO> save(@RequestBody ClienteDTO entity) {
 		return new ResponseEntity<>(clientesService.save(entity), HttpStatus.CREATED);
 	}
@@ -46,11 +50,11 @@ public class ClientesController {
 	}
 
     @DeleteMapping("/delete/{id}")
-//    @ApiOperation(value = "Borrar un cliente según su Id", authorizations = {})
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "OK"),
-//            @ApiResponse(code = 404, message = "Cliente no encontrado")
-//    })
+    @ApiOperation(value = "Borrar un cliente según su Id")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Cliente no encontrado")
+    })
 	public ResponseEntity delete(@PathVariable("id") int id) {
     	 return clientesService.delete(id) ? new ResponseEntity(HttpStatus.OK): new ResponseEntity(HttpStatus.NOT_FOUND);
 	}

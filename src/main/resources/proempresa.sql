@@ -1,0 +1,55 @@
+CREATE TABLE CLIENTES(
+"id_cliente" SERIAL NOT NULL PRIMARY KEY,
+"nombres" VARCHAR NULL,
+"apellidos" VARCHAR  NULL,
+"nro_documento" VARCHAR  NULL,
+"email" VARCHAR  NULL,
+"create_at" VARCHAR  NULL);
+
+
+CREATE TABLE VENTAS(
+"id_venta" SERIAL NOT NULL PRIMARY KEY,
+"id_cliente" INT NOT NULL,
+"fecha" VARCHAR NULL,
+"serie" VARCHAR  NULL,
+"numero" VARCHAR  NULL,
+"total" NUMERIC  NULL,
+CONSTRAINT "FK_VENTAS_CLIENTES"
+    FOREIGN KEY ("id_cliente")
+    REFERENCES CLIENTES ("id_cliente")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE TABLE PRODUCTOS(
+"id_producto" SERIAL NOT NULL PRIMARY KEY,
+"descripcion" VARCHAR NULL,
+"cantidad" INT  NULL,
+"estado" INT  NULL);
+
+
+CREATE TABLE DETALLE_VENTAS(
+"id_detalle" SERIAL NOT NULL PRIMARY KEY,
+"id_venta" INT NOT NULL,
+"id_producto" INT NOT NULL,
+"cantidad" VARCHAR NULL,
+"precio" INT NULL,
+"sub_total" INT NULL,
+CONSTRAINT "FK_DETVENTAS_VENTAS"
+    FOREIGN KEY ("id_venta")
+    REFERENCES VENTAS ("id_venta")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+CONSTRAINT "FK_DETVENTAS_PRODUCTOS"
+    FOREIGN KEY ("id_producto")
+    REFERENCES PRODUCTOS ("id_producto")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+
+INSERT INTO CLIENTES VALUES (1, 'Juan Luis', 'Ramirez Delgado', '12345678', 'juan@gmail.com', '2023-09-19 13:07:04.739908');
+INSERT INTO CLIENTES VALUES (2, 'Diego', 'Regalado Sanchez', '12345678', 'juan@gmail.com', '2023-09-19 13:07:04.739908');
+
+select * from clientes 
+
